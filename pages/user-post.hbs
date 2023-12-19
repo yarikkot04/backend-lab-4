@@ -1,0 +1,24 @@
+<h1>Add user</h1>
+
+<form action="/user" method="post">
+    <div class="input-field">
+        <input id="name" name="name" type="text" class="validate" required>
+        <label for="name">Name of user</label>
+        <span class="helper-text" data-error="Enter name"></span>
+    </div>
+    <label>Default currency</label>
+    <div class="input-field">
+        <select class="browser-default" name="default_currency">
+            <option value="" disabled selected>Choose default currency</option>
+            <option value="UAH">UAH - Ukrainian hryvnia</option>
+            <option value="USD">USD - U.S. dollar</option>
+            <option value="EUR">EUR - Euro</option>
+            <option value="GBP">GBP - British pound</option>
+            <option value="JPY">JPY - Japanese yen</option>
+            <option value="CAD">CAD - Canadian dollar</option>
+        </select>
+    </div>
+    <button class="btn btn-primary" type="submit">Add user</button>
+</form>
+<br>
+<a class="waves-effect waves-light btn" href="/">back</a>
