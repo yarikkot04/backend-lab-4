@@ -67,6 +67,20 @@ class CommonUtils {
         if (!candidate) return false
         return true
     }
+    static validateAuthData(body) {
+        const minUsernameLength = 4
+        const minPasswdLength = 4
+        if (+body.username == 0) {
+            return false
+        } else if (+body.passwd == 0) {
+            return false
+        } else if (body.username.length < minUsernameLength) {
+            return false
+        } else if (body.passwd.length < minPasswdLength) {
+            return false
+        }
+        return true
+    }
 }
 
 module.exports = {
