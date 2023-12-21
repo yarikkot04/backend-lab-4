@@ -10,8 +10,9 @@
     <div class="input-field">
         <input id="category_id" name="category_id" type="text" class="validate">
         <label for="category_id">Match by category id/label>
-        <span class="helper-text" data-error="Enter price"></span>
+            <span class="helper-text" data-error="Enter price"></span>
     </div>
+    <input type="hidden" name="_csrf" value="{{@root.csrf}}">
     <button class="btn btn-primary">Find a match</button>
 </form>
 <br>

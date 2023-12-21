@@ -10,16 +10,25 @@ if (deleteUserForm) {
     deleteUserForm.addEventListener('submit', (event) => {
         event.preventDefault()
         const userId = deleteUserForm.querySelector("input[name='id']").value
-        fetch(`/user/${userId}`, {
-            method: 'DELETE'
+        fetch('/csrf', {
+            method: 'GET'
         })
             .then(res => res.json())
             .then(res => {
-                if (res.status == 0) {
-                    window.location.href = '/users'
-                } else {
-                    window.location.href = '/delete/user/error'
-                }
+                fetch(`/user/${userId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-Token': res
+                    },
+                })
+                    .then(res => res.json())
+                    .then(res => {
+                        if (res.status == 0) {
+                            window.location.href = '/users'
+                        } else {
+                            window.location.href = '/delete/user/error'
+                        }
+                    })
             })
     })
 }
@@ -28,18 +37,28 @@ if (deleteCategoryForm) {
     deleteCategoryForm.addEventListener('submit', (event) => {
         event.preventDefault()
         const categoryName = deleteCategoryForm.querySelector("input[id='name']").value
-        fetch(`/category?categoryName=${categoryName}`, {
-            method: 'DELETE'
+        fetch('/csrf', {
+            method: 'GET'
         })
             .then(res => res.json())
             .then(res => {
-                if (Array.isArray(res)) {
-                    window.location.href = '/category'
-                } else {
-                    window.location.href = '/delete/category/error'
-                }
+                fetch(`/category?categoryName=${categoryName}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-Token': res
+                    },
+                })
+                    .then(res => res.json())
+                    .then(res => {
+                        if (Array.isArray(res)) {
+                            window.location.href = '/category'
+                        } else {
+                            window.location.href = '/delete/category/error'
+                        }
+                    })
             })
     })
+
 }
 
 if (filterRecordForm) {
@@ -50,7 +69,6 @@ if (filterRecordForm) {
         fetch(`/record?userId=${userId}&categoryId=${categoryId}`)
             .then(res => res.json())
             .then(res => {
-                console.log(res)
                 if (res.selectedRecords.length) {
                     document.body.innerHTML = "";
                     const jsonDisplay = document.createElement("pre");
@@ -75,17 +93,26 @@ if (deleteRecordForm) {
     deleteRecordForm.addEventListener('submit', (event) => {
         event.preventDefault()
         const recordId = deleteRecordForm.querySelector("input[id='id']").value
-        fetch(`/record/${recordId}`, {
-            method: 'DELETE'
+        fetch('/csrf', {
+            method: 'GET',
         })
             .then(res => res.json())
             .then(res => {
-                if (Array.isArray(res)) {
-                    window.location.href = '/records'
-                } else {
-                    window.location.href = '/delete/record/error'
+                fetch(`/record/${recordId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-Token': res
+                    },
+                })
+                    .then(res => res.json())
+                    .then(res => {
+                        if (Array.isArray(res)) {
+                            window.location.href = '/records'
+                        } else {
+                            window.location.href = '/delete/record/error'
 
-                }
+                        }
+                    })
             })
     })
 }

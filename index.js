@@ -5,7 +5,8 @@ const path = require('path')
 const mongoose = require('mongoose')
 const mongoUri = process.env.MONGO_URI
 const cookieParser = require('cookie-parser')
-
+const csurf = require('csurf')
+const csrf = require('./middlewares/csrf')
 
 
 const mainRoute = require('./routes/main')
@@ -17,6 +18,7 @@ const categoryRoute = require('./routes/category')
 const recordRoute = require('./routes/record')
 const recordsRoute = require('./routes/records')
 const authRoute = require('./routes/auth')
+const csrfRoute = require('./routes/csrf')
 
 const hbs = expHbs.create({
     defaultLayout: 'main',
@@ -32,7 +34,8 @@ app.set('views', 'pages')
 app.use(express.static(path.resolve(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
-
+app.use(csurf({ cookie: true }))
+app.use(csrf)
 
 app.use('/', mainRoute)
 app.use('/user', userRoute)
@@ -43,7 +46,7 @@ app.use('/category', categoryRoute)
 app.use('/record', recordRoute)
 app.use('/records', recordsRoute)
 app.use('/auth', authRoute)
-
+app.use('/csrf', csrfRoute)
 
 async function start() {
     const PORT = process.env.PORT || 4000
