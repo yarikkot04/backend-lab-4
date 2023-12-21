@@ -5,6 +5,15 @@
 
 ### Attached a file with environment variables to the classroom.
 
+### To work with postman
+Since I added csrf token, to work correctly with the postman, you need to manually get a new csrf token.
+
+![Error](img/get_csrf_token.png)
+
+Then replace the old token in Environment with the new one you received.
+
+![Error](img/add_csrf_to_post_req.png)
+
 ## Instruction
 
 ### Docker-compose

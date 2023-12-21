@@ -51,7 +51,7 @@ router.post('/register', async (req, res) => {
             password: hashedPass
         })
         await newAuthUser.save()
-        res.json({ error: 'User successfully created!' })
+        res.json({ message: 'User successfully created!' })
     } catch (e) {
         return res.status(400).json({ error: 'Server error!' })
     }
