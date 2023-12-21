@@ -1,11 +1,7 @@
-# lab_3_backend
+# lab_4_backend
 > Student: Котенко Ярослав
 
 > Group: IM-13
-
-### My option № 1
-
-13 % 3 = 1
 
 ### Attached a file with environment variables to the classroom.
 
