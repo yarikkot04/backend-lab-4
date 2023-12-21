@@ -1,9 +1,11 @@
 const { Router } = require('express')
 const router = Router()
 
-router.get('/', (req,res) => {
+router.get('/', (req, res) => {
+    const username = req.user.username
     res.render('index', {
-        title : 'main page'
+        title: 'main page',
+        username
     })
 })
 

@@ -15,6 +15,24 @@ router.get('/register', (req, res) => {
     })
 })
 
+router.post('/login', async (req, res) => {
+    const { username, passwd } = req.body
+    const candidate = await AuthUser.findOne({ username })
+    if (!candidate) {
+        return res.status(400).json({ error: `User with username: ${username} doesn't exist!` })
+    }
+    const isPassCorrect = await bcrypt.compare(passwd, candidate.password)
+    if (!isPassCorrect) {
+        return res.status(400).json({ error: `Incorrect password!` })
+    }
+    const jwtToken = CommonUtils.generateAccessToken(candidate._id, candidate.username)
+    res.cookie('jwtToken', jwtToken, {
+        httpOnly: true,
+        maxAge: 30 * 60 * 1000,
+    })
+    return res.redirect('/')
+})
+
 router.post('/register', async (req, res) => {
     try {
         const errors = CommonUtils.validateAuthData(req.body)
@@ -37,6 +55,11 @@ router.post('/register', async (req, res) => {
     } catch (e) {
         return res.status(400).json({ error: 'Server error!' })
     }
+})
+
+router.get('/logout', (req, res) => {
+    res.cookie('jwtToken', '', { maxAge: 0 })
+    res.redirect('/auth/login')
 })
 
 

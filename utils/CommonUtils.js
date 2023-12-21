@@ -1,6 +1,8 @@
 const Category = require('../model/category_model')
 const User = require('../model/user_model')
 const Record = require('../model/record_model')
+const jwt = require('jsonwebtoken')
+const { secret } = require('../config')
 
 class CommonUtils {
     static async checkUsernameByNameNotExists(username) {
@@ -80,6 +82,13 @@ class CommonUtils {
             return false
         }
         return true
+    }
+    static generateAccessToken(id, username) {
+        const payload = {
+            id,
+            username
+        }
+        return jwt.sign(payload, secret, { expiresIn: '1h' })
     }
 }
 
