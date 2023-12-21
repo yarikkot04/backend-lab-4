@@ -36,13 +36,13 @@ If you want to run the project without using "docker-compose" then you can do th
 
 Create an image first. To do this, you need to enter: 
 ```
-$ docker build -t lab-3 . 
+$ docker build -t lab-4 . 
 ```
 in the terminal.
 
 Then run the container: 
 ```
-$ docker run -d -p 3000:3000 --env-file .env --name app --rm lab-3
+$ docker run -d -p 3000:3000 --env-file .env --name app --rm lab-4
 ```
 
 To check the application, click on the link:
