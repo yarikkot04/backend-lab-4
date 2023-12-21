@@ -3,14 +3,16 @@ const router = Router()
 const Record = require('../model/record_model')
 const User = require('../model/user_model')
 const { CommonUtils } = require('../utils/CommonUtils')
+const auth = require('../middlewares/auth')
 
-router.get('/add', (req, res) => {
+
+router.get('/add', auth, (req, res) => {
     res.render('record-post', {
         title: 'Add record'
     })
 })
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     try {
         const user_id = req.query.userId
         const category_id = req.query.categoryId
@@ -48,7 +50,7 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     try {
         let {
             user_id,
@@ -82,7 +84,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', auth, async (req, res) => {
     try {
         const selectedRecord = await Record.findById(req.params.id)
         if (!selectedRecord) {
@@ -100,7 +102,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
     try {
         const recordExistenceStatus = await CommonUtils.verifyRecordExistenceById(req.params.id)
         if (!recordExistenceStatus) {

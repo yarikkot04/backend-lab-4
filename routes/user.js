@@ -2,15 +2,16 @@ const { Router } = require('express')
 const router = Router()
 const User = require('../model/user_model')
 const { CommonUtils } = require('../utils/CommonUtils')
+const auth = require('../middlewares/auth')
 
 
-router.get('/', (req, res) => {
+router.get('/', auth, (req, res) => {
     res.render('user-post', {
         title: 'Add user'
     })
 })
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     try {
         let { name, default_currency } = req.body
         const userStatus = await CommonUtils.checkUsernameByNameNotExists(name)
@@ -35,7 +36,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', auth, async (req, res) => {
     try {
         const id = req.params.id
         const user = await User.findById(id)
@@ -54,10 +55,10 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
     try {
         const userExistenceStatus = await CommonUtils.verifyUserExistenceById(req.params.id)
-        if(!userExistenceStatus) {
+        if (!userExistenceStatus) {
             res.status(404).json({ error: 'The user with this id does not exist' })
             return
         }

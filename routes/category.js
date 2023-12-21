@@ -2,14 +2,15 @@ const { Router } = require('express')
 const router = Router()
 const Category = require('../model/category_model')
 const { CommonUtils } = require('../utils/CommonUtils')
+const auth = require('../middlewares/auth')
 
-router.get('/add', (req, res) => {
+router.get('/add', auth, (req, res) => {
     res.render('category-post', {
         title: 'Add category'
     })
 })
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     try {
         const categories = await Category.find()
         res.json(categories)
@@ -19,7 +20,7 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     try {
         const { name } = req.body
         const categoryStatus = await CommonUtils.checkCategoryByNameNotExists(name)
@@ -38,7 +39,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.delete('/', async (req, res) => {
+router.delete('/', auth, async (req, res) => {
     try {
         const categoryStatus = await CommonUtils.checkCategoryByNameNotExists(req.query.categoryName)
         if (categoryStatus) {
