@@ -4,6 +4,8 @@ const expHbs = require('express-handlebars')
 const path = require('path')
 const mongoose = require('mongoose')
 const mongoUri = process.env.MONGO_URI
+const cookieParser = require('cookie-parser')
+
 
 
 const mainRoute = require('./routes/main')
@@ -14,6 +16,7 @@ const deleteRoute = require('./routes/delete')
 const categoryRoute = require('./routes/category')
 const recordRoute = require('./routes/record')
 const recordsRoute = require('./routes/records')
+const authRoute = require('./routes/auth')
 
 const hbs = expHbs.create({
     defaultLayout: 'main',
@@ -28,6 +31,8 @@ app.set('views', 'pages')
 
 app.use(express.static(path.resolve(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
+
 
 app.use('/', mainRoute)
 app.use('/user', userRoute)
@@ -37,6 +42,8 @@ app.use('/delete', deleteRoute)
 app.use('/category', categoryRoute)
 app.use('/record', recordRoute)
 app.use('/records', recordsRoute)
+app.use('/auth', authRoute)
+
 
 async function start() {
     const PORT = process.env.PORT || 4000

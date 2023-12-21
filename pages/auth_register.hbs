@@ -1,0 +1,18 @@
+<h1>Register user</h1>
+
+<form action="/auth/register" method="POST">
+  <div class="input-field">
+    <input id="username" name="username" type="text" class="validate" required>
+    <label for="username">Username</label>
+    <span class="helper-text" data-error="Enter username"></span>
+  </div>
+
+  <div class="input-field">
+    <input id="passwd" name="passwd" type="password" class="validate" required>
+    <label for="passwd">Password</label>
+    <span class="helper-text" data-error="Enter password"></span>
+  </div>
+  <button class="btn purple" type="submit">Registration</button>
+</form>
+<br>
+<a href="/auth/login">Login</a>
